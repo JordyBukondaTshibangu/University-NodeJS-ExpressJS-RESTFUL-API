@@ -1,60 +1,58 @@
 
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { WelcomeLecturer, sendCancelEmail } from '../email/lecturerEamil.js';
 import Lecturer from '../models/lectures.js';
-import sharp from 'sharp';
 
 export const create_lecturer =  async (req, res) => {
-    try{
-         await bcrypt.hash(req.body.password, 8, async(err, hash) =>{
-         const lecture = new Lecturer({
-             fullName : req.body.fullName,
-             age : req.body.age,
-             email : req.body.email,
-             DOB : req.body.DOB,
-             description : req.body.description,
-             password :hash
-     }) 
-         const savedLecture =  await lecture.save()    
-         const token = await lecture.generateToken()
-         await WelcomeLecturer(req.lecture.email, req.lecture.fullName)
-         res.send({savedLecture, token})
-     })
-    }catch(err){
-        res.send(err)
-    }
- }
- export const login_lecturer = async (req,res) => {
-    try{
-       const lecture = await  Lecturer.findOne({email : req.body.email})
-            if(!lecture){
-                res.send('Auth Faied')
-            }
-            bcrypt.compare(req.body.password, lecture.password, (err, result) =>{
-                if(err){
-                    throw new Error('Auth Failed !!!')
-                }
-                if(result){
-                    const token = lecture.generateToken()
-                    console.log(token)
-                    return res.send({lecture, token})
-                }
-            })
-    }catch(err){
-        res.send(err)
+    try {
+        const { fullName, age, email, DOB, description, password } = req.body
+
+        await bcrypt.hash(password, 8, async( err, hash) => {
+                const lecture = new Lecturer({
+                    fullName, age, email, DOB, description,
+                    password :hash
+                }) 
+
+                const savedLecture =  await lecture.save()   
+                res.status(202).json({ lecture : savedLecture })
+                WelcomeLecturer
+        })
+    } catch(err){
+        res.status(500).json({ message : err.message })
     }
 }
-export const uploadProfile_lecturer = async(req, res) => {
-
+export const login_lecturer = async (req,res) => {
     try {
-        const resizedPic = await sharp(req.file.buffer).resize({width : 200, height : 200}).png().toBuffer()
-        req.lecture.picture = resizedPic
-        await req.lecture.save()
-        res.send('Image Successfully uploaded')
+        const { email , password } = req.body
+        const lecture = await  Lecturer.findOne({email})
+                if(!lecture){
+                    res.status(404).json({ message : 'Auth Faied'})
+                }
+                bcrypt.compare(password, lecture.password, (err, result) => {
+                    if(err){
+                        throw new Error('Auth Failed !!!');
+                        return
+                    }
+                    if(result){
+                        const token =  jwt.sign({
+                            email : lecture.email ,
+                            lectureId : lecture._id
+                        },
+                        "process.env.JWT_KEY",
+                        {
+                            expiresIn : '1h'
+                        })
+                        return res.status(200).json({
+                            message : 'Authentication Successfull',
+                            lecture,
+                            token 
+                        })
+                    }
+                })
     }catch(err){
-        (err, req, res, next) => {
-            res.send('Error')}
-        }
+        res.status(500).json({ message : err.message })
+    }
 }
 export const getProfile_lecturer = async (req, res) => {
     try{
@@ -65,38 +63,46 @@ export const getProfile_lecturer = async (req, res) => {
     }
 }
 export const update_lecturer = async (req, res) => {
-    try{
+    try {
+          const _id = req.params.id  
           const update = req.body
-          const updated = await Lecturer.findOneAndUpdate(update)
-              res.send(updated)
-    }catch(err){
-        res.send(err)
+          const updated = await Lecturer.findOneAndUpdate({_id }, update)
+              res.status(200).json({
+                  message : "Lecture successfully updated",
+                  new : update,
+                  old : updated
+              })
+    } catch(err){
+        res.status(500).json({ message : err.message })
     }
 }
 export const delete_lecturer = async (req, res) => {
     try{
-        const deleted = await Lecturer.findOneAndDelete()
+
+        const _id = req.params.id
+        const deleted = await Lecturer.findOneAndDelete({_id})
         await sendCancelEmail(req.lecture.email, req.lecture.fullName)
-        res.send(deleted)
+        res.status(200).json({message : "Profile successfully deleted", lecture : deleted})
+
     }catch(err){
-        res.send(err)
+        res.status(500).json({ message : err.message })
     }
 }
 export const getAll_lecturers = async (req, res) => {
-    try{
-        const lectures = await Lecturer.find()
-        res.send(lectures)
-    }catch(err){
-        res.send(err)
+    try {
+        const lectures = await Lecturer.find().select('fullName email description' )
+        res.status(200).json(lectures)
+    } catch(err){
+        res.status(500).json({ message : err.message })
     }
 }
 export const getSingle_lecturer = async (req, res) => {
-    try{
-        const id = req.params.id
-            const lecture = await Lecturer.findById({_id : id})
-            res.send(lecture)
-    }catch(err){
-        res.send(err)
+    try {
+        const _id = req.params.id
+        const lecture = await Lecturer.findById({_id}).select('fullName email description DOB')
+        res.status(200).json(lecture)
+    } catch(err){
+        res.status(500).json({ message : err.message })
     }
     
 }

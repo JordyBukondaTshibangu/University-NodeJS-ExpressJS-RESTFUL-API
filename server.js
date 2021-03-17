@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended : true}))
-app.use(LectureRouter)
+app.use('/lectures', LectureRouter)
 app.use(StudentRouter)
 app.use(CourseRouter)
 

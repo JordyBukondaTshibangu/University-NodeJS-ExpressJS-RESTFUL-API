@@ -3,21 +3,23 @@ import Lecturer from '../models/lectures.js';
 
 export const auth_Lecturer = async (req, res, next) =>{
 
-    try{
-        const token = req.header('AUTHORIZATION').replace('Bearer ', '')
-        const decoded = await jwt.verify(token,'PRIVATE_KEY')
-        const lecture = await Lecturer.findOne({_id : decoded._id, email : decoded.email, 'tokens.token':token})
+    try {
+
+        const token = req.headers.authorization.split(" ")[1];
+        const decoded = await jwt.verify(token,"process.env.JWT_KEY")
+        const lecture = await Lecturer.findOne({_id : decoded.lectureId, email : decoded.email})
+
         if(!lecture){
             throw new Error('Please create an account !!!')
         }
-
+        
         req.lecture = lecture
-        req.token = token
+        req.tokenLecture = token
         next()
 
     }catch(err)
     {
-        res.send(err.message)
+        res.status(500).json({message : 'Authentication failed'})
     }   
 }
 
