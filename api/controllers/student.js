@@ -1,122 +1,144 @@
-
 import  sharp from 'sharp';
 import  bcrypt from 'bcrypt';
 import Student from '../models/students.js';
 import { WelcomeStudent, sendCancelEmail } from '../email/studentEmail.js';
+import jwt from 'jsonwebtoken';
 
-export const create_student = async(req, res) =>{
-    try{
-        await bcrypt.hash(req.body.password, 8, async(err, hash) =>{
+export const create_student = async(req, res) => {
+    try {
+        const { fullName, age, email, DOB, description, password } = req.body
+
+        await bcrypt.hash(password, 8, async(err, hash) =>{
                 
             const student = new Student({
-                    fullName : req.body.fullName,
-                    age : req.body.age,
-                    email : req.body.email,
-                    DOB : req.body.DOB,
-                    description : req.body.description,
+                    fullName, age, email, DOB, description,
                     password : hash
             }) 
-            const students = await student.save()
-            await WelcomeStudent()
-            res.send(students)
+            const studentCreated = await student.save()
+            await WelcomeStudent(email, fullName)
+            res.status(202).json({
+                message : "Student successfully created ",
+                student : studentCreated
+            })
         })
     }catch(err){
-        res.send(err)
-    }
-}
-export const upload_profilPic_student = async  (req, res) => {
-
-    const resizedPicture = await sharp(req.file.buffer).resize({ width : 200, height : 200}).png().toBuffer()
-    req.student.picture = resizedPicture
-    const student = await req.student.save()
-    res.send('Image Uploaded successfully ')
-}
-export const get_student_profile = async(req, res) =>{
-    try{
-        const student = await Student.findById({_id : req.params.id})
-        if(!student || !student.picture){
-            throw new Error(' No sutudent')
-        }
-        console.log(student.picture)
-        res.set('Content-Type','image/jpeg')
-        res.send(student.picture)
-
-    }catch(err){
-        res.send(err)
-    }
-}
-export const login_student = async (req,res) => {
-    try{
-        const student = await Student.findOne({email :req.body.email})
-        if(!student){
-            throw new Error('NO student found !!!')
-        }
-        if(student){
-            await bcrypt.compare(req.body.password, student.password)
-            const token = await student.generateToken()
-            console.log(token)
-            res.send({ student, token})
-        }
-    }catch(err){
-        res.send(err)
-    }
-}
-export const get_me = async(req, res) => {
-    try{
-        res.send(req.student)
-    }catch(err){
-        res.send(err)
-    }
-}
-export const update_me = async(req, res) => {
-    try{
-        const result = await Student.findByIdAndUpdate({_id : req.student._id}, req.body)
-        res.send(result)
-    }catch(err){
-        res.send(err)
-    }
-}
-export const delete_me = async(req, res) => {
-    try{
-        await Student.findOneAndDelete(req.student.id)
-        res.send('User deleted')
-        await sendCancelEmail()
-    }catch(err){
-        res.send(err)
-    }
-}
-export const get_All_students = async(req, res) => { 
-    try{
-        const students = await Student.find()
-        res.send(students)
-    }catch(err){
-        res.send(err)
-    }  
-}
-
-
-export const update_student = async(req, res) => {
-    try{
-        const update = await Student.findByIdAndUpdate({_id : req.params.id}, req.body)
-        res.send(update)
-    }catch(err){
-        res.send(err)
+        res.status(500).json({
+            message : err.message
+        })
     }
 }
 export const delete_student = async(req, res) => {
-    try{
-        const deleted = await Student.findByIdAndDelete({_id : req.params.id})
-        res.send(deleted)
-        await sendCancelEmail()
+    try {
+        const _id = req.params.id
+        const deletedStudent = await Student.findByIdAndDelete({_id})
+        res.status(200).json({
+            message : "Student successfully deleted",
+            deletedStudent
+        })
+
+        await sendCancelEmail(deletedStudent.email, deletedStudent.fullName)
+
     }catch(err){
-        res.send(err)
+        res.status(500).json({
+            message : err.message
+        })
     }
 }
 export const get_student = async(req, res) => {
-    try{
-        const student = await Student.findById({_id : req.params.id})
-        res.send(student)
+    try {
+
+        const _id = req.params.id
+        const student = await Student.findById({_id}).select('fullName age DOB email description')
+        res.status(200).json({student})
+
     }catch(err){
-        res.send(err)
+        res.status(500).json({
+            message : err.message
+        })
     }
 }
+export const get_All_students = async(req, res) => { 
+    try {
+        
+        const students = await Student.find().select('fullName age DOB email description')
+        res.status(200).json({ 
+            message : "List of students",
+            List : students
+        })
+    } catch(err){
+        res.status(500).json({
+            message : err.message
+        })
+    }  
+}
+
+export const login_student = async (req,res) => {
+    try {
+        const { email, password } = req.body
+        const student = await Student.findOne({email})
+        if(!student){
+            throw new Error('No student found !!!')
+        }
+        if(student){
+            await bcrypt.compare(password, student.password, (error, result) => {
+                if(error){
+                    throw new Error('Auth failed')
+                }
+                if(result){
+                    const token =  jwt.sign({
+                        email : student.email ,
+                        studentId : student._id
+                    },
+                    "process.env.JWT_KEY",
+                    {
+                        expiresIn : '1h'
+                    })
+                    return res.status(200).json({
+                        message : 'Authentication Successfull',
+                        student,
+                        token 
+                    })
+                }
+            })
+            
+        }
+    }catch(err){
+        res.status(500).json({
+            message : err.message
+        })
+    }
+}
+export const get_me = async(req, res) => {
+    try {
+        res.status(200).json({student : req.student})
+    }catch(err){
+        res.status(500).json({
+            message : err.message
+        })
+    }
+}
+export const update_me = async(req, res) => {
+    try {
+        
+        const _id = req.body.id;
+        const update = req.body
+
+        console.log(_id, update)
+
+        const student = await Student.findByIdAndUpdate({_id}, update)
+        res.status(200).json({
+            message : "Profile updated",
+            student
+        })
+
+    } catch(err){
+        res.status(500).json({
+            message : err.message
+        })
+    }
+}
+
+
+
+
+

@@ -48,7 +48,7 @@ export const update_course = async (req, res) => {
     }catch(err){
         res.status(500).json({
                 message : err.message
-            })}
+        })}
 }
 export const delete_course = async(req, res) => {
     try {
@@ -61,5 +61,5 @@ export const delete_course = async(req, res) => {
     }catch(err){
         res.status(500).json({
                 message : err.message
-            })}
+        })}
 }

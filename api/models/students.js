@@ -24,7 +24,6 @@ const studentSchema = new Schema({
             }
         },
         unique : true
-        
     },
     DOB : {
         type : String,
@@ -56,24 +55,6 @@ const studentSchema = new Schema({
        timeStamps : true 
     }    
 )
-
-studentSchema.methods.generateToken = async function(){
-    student = this 
-
-    const token = jwt.sign({
-        id : student.id,
-        email : student.email
-    }, 'PRIVATE_KEY', {
-        expiresIn : '3h'
-    })
-    console.log(token)
-
-    student.token = token
-
-    return token
-
-    
-}
 const studentExport = mongoose.model('Student', studentSchema);
 
 export default studentExport;
