@@ -1,6 +1,7 @@
-const mongoose = require('mongoose')
-const validator = require('validator')
-const jwt = require('jsonwebtoken')
+import mongoose from 'mongoose';
+import validator from 'validator';
+import jwt from 'jsonwebtoken';
+
 const Schema = mongoose.Schema
 
 const studentSchema = new Schema({
@@ -33,10 +34,10 @@ const studentSchema = new Schema({
         type : String,
         required : true
     },
-    courses : {
+    courses : [{
         type : mongoose.Schema.Types.ObjectId,
         ref : 'Course'
-    },
+    }],
     password : {
         type : String,
         required : true,
@@ -49,10 +50,9 @@ const studentSchema = new Schema({
     }, 
     picture : {
         type : Buffer
-    },
-    token :{
-        type : String
-    }}, {
+    }
+}, 
+    {
        timeStamps : true 
     }    
 )
@@ -74,4 +74,6 @@ studentSchema.methods.generateToken = async function(){
 
     
 }
-const Student = module.exports = mongoose.model('Student', studentSchema)
+const studentExport = mongoose.model('Student', studentSchema);
+
+export default studentExport;

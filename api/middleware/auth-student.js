@@ -1,7 +1,7 @@
-const jwt = require('jsonwebtoken')
-const Student = require('../models/students')
+import  jwt from 'jsonwebtoken';
+import  Student from '../models/students.js';
 
-const auth_Student = async (req, res, next) =>{
+export const auth_Student = async (req, res, next) =>{
     try{
         const token = req.header('Authorization').replace('Bearer ','')
         const decoded = await jwt.verify(token,'PRIVATE_KEY')
@@ -18,4 +18,3 @@ const auth_Student = async (req, res, next) =>{
         res.send(err)
     }
 }
-module.exports = auth_Student

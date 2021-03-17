@@ -1,7 +1,8 @@
-const mongoose = require('mongoose')
-const jwt = require('jsonwebtoken')
+import  mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
+import validator from 'validator';
+
 const Schema = mongoose.Schema
-const validator = require('validator')
 
 const lectureSchema = new Schema({
     fullName : {
@@ -43,7 +44,7 @@ const lectureSchema = new Schema({
         }
     },
     picture :{
-        type : Buffer
+        type : String
     },
     tokens : [{
         token : {
@@ -75,4 +76,6 @@ lectureSchema.methods.generateToken = async function(){
     return token
 }
 
-const Lectures = module.exports = mongoose.model('Lecture', lectureSchema)
+const lectureExport = mongoose.model('Lecture', lectureSchema);
+
+export default lectureExport

@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose';
+
 const Schema = mongoose.Schema
 
 const courseSchema = new Schema({
@@ -18,15 +19,12 @@ const courseSchema = new Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : 'Lecture'
     },
-    students : {
-        type : mongoose.Schema.Types.ObjectId,
-       // required : true,
-        ref : 'Student'
-    },
     department : {
         type : String,
         required : true
     }
 })
 
-const course = module.exports = mongoose.model('Course', courseSchema)
+const courseExport  = mongoose.model('Course', courseSchema);
+
+export default courseExport;

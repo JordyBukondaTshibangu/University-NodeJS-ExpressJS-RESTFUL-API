@@ -1,7 +1,7 @@
-const jwt = require('jsonwebtoken')
-const Lecturer = require('../models/lectures')
+import jwt from 'jsonwebtoken';
+import Lecturer from '../models/lectures.js';
 
-const auth_Lecturer = async (req, res, next) =>{
+export const auth_Lecturer = async (req, res, next) =>{
 
     try{
         const token = req.header('AUTHORIZATION').replace('Bearer ', '')
@@ -21,4 +21,3 @@ const auth_Lecturer = async (req, res, next) =>{
     }   
 }
 
-module.exports = auth_Lecturer
