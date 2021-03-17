@@ -11,7 +11,7 @@ const courseSchema = new Schema({
         type : String,
         required : true,
     },
-    ends :{
+    end :{
         type : String,
         required : true
     },

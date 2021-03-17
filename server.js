@@ -12,7 +12,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended : true}))
 app.use('/lectures', LectureRouter)
 app.use(StudentRouter)
-app.use(CourseRouter)
+app.use('/courses', CourseRouter)
 
 app.listen(port, () => {
     console.log(` The server is up running on port : ${port}`)

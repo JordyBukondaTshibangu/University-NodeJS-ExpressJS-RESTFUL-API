@@ -10,10 +10,11 @@ delete_course
 import  { auth_Lecturer } from '../middleware/auth-lecturer.js';
 
 
-router.post('/courses/', auth_Lecturer, create_course)
-router.get('/courses/', getAll_course)
-router.patch('/courses/:id', auth_Lecturer, update_course)
-router.delete('/courses/:id', auth_Lecturer, delete_course)
-router.get('/courses/:id', get_course)
+router.post('/', auth_Lecturer, create_course)
+router.get('/', getAll_course)
+router.get('/:id', get_course)
+router.put('/:id', auth_Lecturer, update_course)
+router.delete('/:id', auth_Lecturer, delete_course)
+
 
 export default router
