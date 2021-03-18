@@ -19,18 +19,15 @@ export const create_course_content = async (req, res) =>{
     try {
 
         const { path } = req.file
-        const courseId = req.params.id
+        const _id = req.params.id
        
-        console.log(path)
-
-        const updatedCourse = await Course.update(
-            { _id: courseId }, 
+        await Course.update(
+            { _id }, 
             { $push: { content: path } }
         );
 
         res.status(202).json({
             message : "Course content created ",
-            course : updatedCourse
         })
     } catch(err){
         res.status(500).json({
