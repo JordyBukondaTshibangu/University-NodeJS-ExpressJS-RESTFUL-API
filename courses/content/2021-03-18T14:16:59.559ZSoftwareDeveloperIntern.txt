@@ -1,0 +1,158 @@
+Software Developer Intern
+Please enter in your details. Required fields are marked with a red asterisks 
+
+Name : Jordy Bukonda
+
+Surname : Tshibangu
+
+Passport No : OP 0316010
+
+Contact No : 068 262 8337
+
+Email Address : jordytshibss@gmail.com
+
+Current Physical Address : 9 Retief Street Bellville, Cape Town, SA
+
+Province : Western Cape 
+
+Relocate : Yes
+
+Postal Code : 7530
+
+
+Please enter the following fields where applicable.
+Notice Period : 1 month
+
+Current Cost to Company : 0 ( not working)
+
+Years of Experience : 1 year
+
+Answer all questions as best possible
+
+Question 1
+How did you hear about this position? 
+* LinkedIN
+Question 2
+
+Please confirm the name of the Job Portal / Tertiary Institution / Agency / Person who referred you.
+* LinkedIN
+Question 3
+
+Do you have Matric/Grade 12 or equivalent qualification?
+* No, but have an alternative qualification equivalent to Matric
+￼
+Question 4
+Have you completed a relevant tertiary qualification?
+* Yes
+
+Question 5
+If yes, what type of tertiary qualification?
+* National Diploma in Computer System (Electrical Engineering)
+￼
+Question 6
+If currently still studying, are you in your final year?
+* Not Applicable
+￼
+Question 7
+What type of transport do you use?
+* Public transport 
+￼
+Question 8
+Do you have any relevant work experience other than the experience gained at a Tertiary institution? If yes, please elaborate.
+
+* I worked as an intern software developer at Nona creative for a year. During my time at Nona , I was assigned to work on the frontend of go2Africa and was given the responsibility to write test in Cypress and later on, I was also assigned to perform QAs.
+
+Question 9
+On a scale of 0 to 5 (with 5 being the highest), how would you rate your Linux skills?
+Please select an option
+
+* 2/5
+
+Question 10
+On a scale of 0 to 5 (with 5 being the highest), how would you rate your PHP skills?
+Please select an option
+
+* 2.5/5
+Question 11
+On a scale of 0 to 5 (with 5 being the highest), how would you rate your HTML Skills?
+Please select an option
+
+* 4/5
+Question 12
+On a scale of 0 to 5 (with 5 being the highest), how would you rate your CSS Skills?
+Please select an option
+
+* 3/5
+Question 13
+On a scale of 0 to 5 (with 5 being the highest), how would you rate your JavaScript Skills?
+Please select an option
+
+* 3.5/5
+Question 14
+On a scale of 0 to 5 (with 5 being the highest), how would you rate your SQL Skills?
+Please select an option
+
+* 2/5
+Question 15
+On a scale of 0 to 5 (with 5 being the highest), how would you rate your Java Skills?
+Please select an option
+￼
+* 2.5/5
+Question 16
+On a scale of 0 to 5 (with 5 being the highest), how would you rate your Objective C Skills?
+Please select an option
+
+* 0/5
+Question 17
+Do you have any experience with GIT or any similar version control?
+Please select an option
+
+* Yes
+Question 18
+Please list any other relevant programming language you have experience with:
+
+* Javascript (React Js, Vue Js, NodeJs, Express Js, GraphQL), PHP (Laravel, WordPress),Java (Basics)
+
+Question 19
+Please list any other relevant development technologies you have experience with:
+
+* Sass, Tailwind, Bootstrap 4, Material UI, React Bootstrap, git
+
+Question 20
+Are you looking for an internship with Full Time Hours or Part-Time Hours?
+* Full time
+￼
+Question 21
+If looking for a Part Time Internship, please indicate the days and hours in a week you are available to work?
+
+* Not applicable
+Question 22
+Please describe a pet project you are currently working on or have worked on, which you want to boast about:
+
+* I am currently working on 2connect. 2connect is a platform that helps people looking for jobs and allows a simple user to register as well as a company ( note that only a company can post a job )  and if a user is interested, he/ she can email the individual who posted the Job via email directly from the app (using a technology called Sendgrid ) and a company or a user can post about professional matters in his timeline. The app is built using the MERN stack (React Js, Express Js on Node and MongoDB for the database)
+
+Question 23
+Describe yourself using 5 adjectives
+* I am a hardworking person, smart, curious, fast learner, and patient
+
+
+Question 24
+Do you prefer working in a Team or do you prefer flying Solo?
+* Team 
+￼
+Question 25
+Are you currently employed?
+* No
+￼
+Question 26
+Why do you think you are the most suitable candidate for this position?
+
+* I personally think that I am the most suitable candidate for this position because I have an experience in the industry and possess skills , I am a fast learner and I will fit in perfectly and be a great addition to the team. 
+Question 27
+What is your salary expectation?
+* R5,000 - R7,500
+
+
+
+
+

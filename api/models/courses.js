@@ -22,7 +22,8 @@ const courseSchema = new Schema({
     department : {
         type : String,
         required : true
-    }
+    },
+    content : [String]
 })
 
 const courseExport  = mongoose.model('Course', courseSchema);

@@ -15,6 +15,29 @@ export const create_course = async (req, res) =>{
         })
         }
 }
+export const create_course_content = async (req, res) =>{
+    try {
+
+        const { path } = req.file
+        const courseId = req.params.id
+       
+        console.log(path)
+
+        const updatedCourse = await Course.update(
+            { _id: courseId }, 
+            { $push: { content: path } }
+        );
+
+        res.status(202).json({
+            message : "Course content created ",
+            course : updatedCourse
+        })
+    } catch(err){
+        res.status(500).json({
+            message : err.message
+        })
+        }
+}
 export const getAll_course = async (req, res) => {
     try {
         const courses = await Course.find()
