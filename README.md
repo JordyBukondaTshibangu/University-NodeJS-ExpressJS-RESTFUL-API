@@ -29,8 +29,8 @@ Bellow are the links to help you installing it:
 
 ### Launch
 
-*  git clone 
-* cd 
+*  git clone git@github.com:JordyBukondaTshibangu/UNIVERSITY-NODE-EXPRESS-API-.git
+* cd UNIVERSITY-NODE-EXPRESS-API-
 * npm install 
 * npm run dev
 
