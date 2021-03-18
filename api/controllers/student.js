@@ -119,7 +119,7 @@ export const get_me = async(req, res) => {
 }
 export const update_me = async(req, res) => {
     try {
-        
+
         const _id = req.body.id;
         const update = req.body
 
@@ -137,8 +137,4 @@ export const update_me = async(req, res) => {
         })
     }
 }
-
-
-
-
 
