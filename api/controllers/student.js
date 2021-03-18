@@ -1,4 +1,3 @@
-import  sharp from 'sharp';
 import  bcrypt from 'bcrypt';
 import Student from '../models/students.js';
 import { WelcomeStudent, sendCancelEmail } from '../email/studentEmail.js';

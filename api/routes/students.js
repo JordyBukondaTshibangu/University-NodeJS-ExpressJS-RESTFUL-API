@@ -16,7 +16,7 @@ import { auth_Student } from '../middleware/auth-student.js';
 
 const storage = multer.diskStorage({
     destination : function(req, file, cb){
-        cb(null, './studentsProfile/')
+        cb(null, './images/studentsProfile/')
     },
     filename : function(req, file, cb){
         cb(null, new Date().toISOString() + file.originalname)
