@@ -137,4 +137,21 @@ export const update_me = async(req, res) => {
         })
     }
 }
+export const upload_profile = async(req, res) => {
+    try {
+        const { path } = req.file
+        const studentPicture = path
+        const _id = req.student.id;
+
+        const student = await Student.findByIdAndUpdate({_id}, { studentPicture });
+        res.status(200).json({
+            message : "Profile updated",
+            studentPicture : student.studentPicture
+        })
+    } catch(err){
+        res.status(500).json({
+            message : err.message
+        })
+    }
+}
 

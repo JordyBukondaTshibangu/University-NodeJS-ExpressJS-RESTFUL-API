@@ -4,6 +4,7 @@ const router = express.Router()
 import {
 create_student,
 login_student,
+upload_profile,
 get_me,
 update_me,
 get_All_students,
@@ -13,31 +14,39 @@ get_student
 import { auth_Lecturer } from '../middleware/auth-lecturer.js';
 import { auth_Student } from '../middleware/auth-student.js';
 
-/*
-const upload = multer({
+const storage = multer.diskStorage({
+    destination : function(req, file, cb){
+        cb(null, './studentsProfile/')
+    },
+    filename : function(req, file, cb){
+        cb(null, new Date().toISOString() + file.originalname)
+    }
+})
+  const fileLimit = {
     limits : {
         fileSize : 1024 * 1024
     },
-    fileFilter (req, file, cb){
-        if(!file.originalname.endsWith('.jpg')){    
-            return cb(new Error('Please uplaod an Image'))
-        }
-        else{
-            cb(undefined, true)
-        }
+  }
+  const fileFilter = (req, file, cb) => {
+      if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png'){
+        cb(undefined, true)
     }
-})
+    else {
+        return cb(new Error('Please uplaod an image'))
+    }
+}
 
-const resizedPicture = await sharp(req.file.buffer).resize({ width : 200, height : 200}).png().toBuffer()
-    req.student.picture = resizedPicture
-    const student = await req.student.save()
-    res.send('Image Uploaded successfully ')
-*/
+const upload = multer({
+    storage,
+    limits : fileLimit.limits,
+    fileFilter
+})
 
 
 router.post('/login', login_student);
 router.get('/me', auth_Student, get_me);
 router.put('/me', auth_Student, update_me);
+router.post('/me/profile', auth_Student, upload.single('studentPicture'), upload_profile)
 
 router.get('/', auth_Lecturer, get_All_students);
 

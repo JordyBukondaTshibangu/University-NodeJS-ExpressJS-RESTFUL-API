@@ -47,8 +47,8 @@ const studentSchema = new Schema({
             }
         }
     }, 
-    picture : {
-        type : Buffer
+    studentPicture : {
+        type : String
     }
 }, 
     {
