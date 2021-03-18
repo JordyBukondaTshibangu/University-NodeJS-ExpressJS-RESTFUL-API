@@ -49,7 +49,7 @@ In the server we import
     5.  bcrypt ( for password encryption)
     6. We Used ES6 for a better syntax ( in the package.json "type": "module”)
 
-- [x] Database  => Database
+- [x] Database  ==> Database
     * Import mongoose 
     * Import models
     * Create a connection url
@@ -68,25 +68,46 @@ We have :
 - [x] API ==> Routes
 
 The routes are : 
+
     1. SIGNUP LECTURE  ==>  POSTT ==> /lectures/
+    
     2. SIGNIN LECTURE  ==> POST ==> /lectures/login
+
     3. VIEW MY PROFILE LECTURE ==> GET ==> /lectures/me
+
     4. UPDATE MY PROFILE LECTURE ==> PUT ==> /lectures/me/:id
+
     5. DELETE LECTURE  ==> DELETE ==> /lectures/:Id
+
     6. VIEW ALL LECTURES ==> GET ==> /lectures/lectures
+
     7. VIEW A SINGLE LECTURER ==> /lectures/:id
+
     8. CREATE COURSE ==> POST ==> /courses/
+
     9. READ ALL COURSES ==> GET ==> /courses/
+
     10. READ SINGLE COURSE ==> GET ==> /courses/:id
-    11. UPDATE COURSE ==> PUT ==> /courses/:tId
+
+    11. UPDATE COURSE ==> PUT ==> /courses/:id
+
     12. DELETE COURSE ==> DELETE ==> /courses/:id
+   
     13. CREATE STUDENT ==> POST ==> /students/
+   
     14. READ ALL STUDENT ==> GET ==> /students/
+    
     15. READ SINGLE STUDENT ==> GET ==> /students/:id
+    
     16. DELETE STUDENT ==> DELETE ==> /students/:id
+    
     17. LOGIN STUDENT ==> POST ==> /student/login
+    
     18. VIEW MY PROFILE STUDENT ==> GET ==> /students/me
+    
     19. UPDATE MY PROFILE STUDENT ==> PUT ==> /students/me
+
+
 
 - [x] MIDDLEWARE ==> Auth
 	
@@ -95,19 +116,19 @@ The routes are :
 		
 	We have the following abilities with auth : 
 
-* The Lecturer auth (create, login, read, update, delete lecturer)
-* The Lecturer auth (create, update, delete course)
-* The Lecturer auth (create, read student)
-* The student  (login, update, read student)
+	* The Lecturer auth (create, login, read, update, delete lecturer)
+	* The Lecturer auth (create, update, delete course)
+	* The Lecturer auth (create, read student)
+	* The student  (login, update, read student)
 
 
 - [x] To add
 
-* Ability to upload image
-* Ability to upload file
-* Add moment for date (course start - course end)
-* Add moment for date (date of birth)
-* View student’s courses
-* View student’s lectures
-* View lecturer’s student
-* View lecturer’s courses
+	* Ability to upload image
+	* Ability to upload file
+	* Add moment for date (course start - course end)
+	* Add moment for date (date of birth)
+	* View student’s courses
+	* View student’s lectures
+	* View lecturer’s student
+	* View lecturer’s courses
