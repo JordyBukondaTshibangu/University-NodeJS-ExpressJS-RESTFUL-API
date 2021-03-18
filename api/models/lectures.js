@@ -42,7 +42,7 @@ const lectureSchema = new Schema({
             }
         }
     },
-    picture :{
+    lecturePicture :{
         type : String
     }
 })

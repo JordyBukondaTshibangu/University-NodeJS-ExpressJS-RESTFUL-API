@@ -7,16 +7,18 @@ import Lecturer from '../models/lectures.js';
 export const create_lecturer =  async (req, res) => {
     try {
         const { fullName, age, email, DOB, description, password } = req.body
-
+        const { path } = req.file 
+        
         await bcrypt.hash(password, 8, async( err, hash) => {
                 const lecture = new Lecturer({
-                    fullName, age, email, DOB, description,
+                    fullName, age, email, DOB, description, 
+                    lecturePicture : path,
                     password :hash
                 }) 
 
                 const savedLecture =  await lecture.save()   
                 res.status(202).json({ lecture : savedLecture })
-                WelcomeLecturer
+                WelcomeLecturer(email, fullName);
         })
     } catch(err){
         res.status(500).json({ message : err.message })

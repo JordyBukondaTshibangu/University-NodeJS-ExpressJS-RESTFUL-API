@@ -11,33 +11,37 @@ getSingle_lecturer
 } from '../controllers/lecturer.js'
 import  { auth_Lecturer } from '../middleware/auth-lecturer.js';
 
-// const  uplaod = multer({
-//     limits : {
-//         fileSize : 1024 * 1024
-//     },
-//     fileFilter(req, file, cb){
-//         if(!file.originalname.endsWith('.jpg')){
-//             return cb(new Error('Please uplaod an image'))
-//         }
-//         else{
-//             cb(undefined, true)
-//         }
-//     }
-// })
+const storage = multer.diskStorage({
+    destination : function(req, file, cb){
+        cb(null, './images/')
+    },
+    filename : function(req, file, cb){
+        cb(null, new Date().toISOString() + file.originalname)
+    }
+})
+  const fileLimit = {
+    limits : {
+        fileSize : 1024 * 1024
+    },
+  }
+  const fileFilter = (req, file, cb) => {
+      if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png'){
+        cb(undefined, true)
+    }
+    else {
+        return cb(new Error('Please uplaod an image'))
+    }
+}
 
-// try {
-    //     const resizedPic = await sharp(req.file.buffer).resize({width : 200, height : 200}).png().toBuffer()
-    //     req.lecture.picture = resizedPic
-    //     await req.lecture.save()
-    //     res.send('Image Successfully uploaded')
-    // }catch(err){
-    //     (err, req, res, next) => {
-    //         res.send('Error')}
-//     }
-
+const upload = multer({
+    storage,
+    limits : fileLimit.limits,
+    fileFilter
+})
+  
 const  router = express.Router()
 
-router.post('/', create_lecturer); // add image 
+router.post('/', upload.single('lecturePicture'), create_lecturer); // add image 
 router.post('/login', login_lecturer)
 router.get('/me', auth_Lecturer, getProfile_lecturer)
 router.put('/me/:id', auth_Lecturer, update_lecturer)
